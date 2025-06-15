@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 Dynamic Nav Bars</title>
+    <!-- Icon Font: Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        /* --- Global Styles & Setup --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            /* Arrange the nav bars vertically */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 80px; /* Space between nav bars */
+            min-height: 100vh;
+            margin: 50px 0;
+        }
+
+        h2 {
+            font-weight: 500;
+            color: #555;
+            position: relative;
+            bottom: 25px;
+            text-align: center;
+        }
+
+        /* Common styles for all navs */
+        .nav {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 380px;
+            height: 70px;
+        }
+        .nav-item {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .nav-link {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /**********************************************
+         *  NAV BAR 1: CURVED CUTOUT (The Original)
+         **********************************************/
+        .nav-1 {
+            position: relative;
+            border-radius: 20px;
+        }
+        .nav-1 .nav-link {
+            color: #929292;
+            transition: transform 0.4s ease;
+            z-index: 2;
+        }
+        .nav-1 .nav-link .bx {
+            font-size: 28px;
+            transition: transform 0.4s ease;
+        }
+        .nav-1-indicator {
+            position: absolute;
+            left: 0; /* JS controlled */
+            top: -30px;
+            width: 60px;
+            height: 60px;
+            background-color: #8a78ff;
+            border-radius: 50%;
+            transition: left 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+            box-shadow: 0 8px 20px rgba(138, 120, 255, 0.4);
+            z-index: 1;
+        }
+        .nav-1-indicator::before, .nav-1-indicator::after {
+            content: '';
+            position: absolute;
+            background-color: transparent;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            box-shadow: 0 -10px 0 0 #fff;
+        }
+        .nav-1-indicator::before { left: -20px; border-top-right-radius: 25px; }
+        .nav-1-indicator::after { right: -20px; border-top-left-radius: 25px; }
+        
+        .nav-1 .nav-item.active .nav-link {
+            color: #fff;
+            transform: translateY(-29px);
+        }
+
+        /**********************************************
+         *  NAV BAR 2: SLIDING PILL
+         **********************************************/
+        .nav-2 {
+            position: relative;
+            padding: 0 10px;
+            border-radius: 50px; /* Make it a pill shape */
+        }
+        .nav-2 .nav-link {
+            color: #888;
+            font-size: 26px;
+            transition: color 0.4s ease;
+            z-index: 2;
+        }
+        .nav-2-indicator {
+            position: absolute;
+            left: 0; /* JS controlled */
+            top: 5%;
+            height: 90%;
+            width: 65px; /* JS controlled */
+            background: #eef2ff;
+            border-radius: 50px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 1;
+        }
+        .nav-2 .nav-item.active .nav-link {
+            color: #5d61f3;
+        }
+
+        /**********************************************
+         *  NAV BAR 3: 3D FLIP
+         **********************************************/
+        .nav-3 {
+            perspective: 800px; /* This enables the 3D effect! */
+            background: #333;
+        }
+        .nav-3 .nav-link {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        .nav-3 .nav-item.active .nav-link {
+            transform: rotateY(180deg);
+        }
+        .nav-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backface-visibility: hidden; /* Hide the back of the element when flipped */
+        }
+        .nav-3 .icon-face {
+            color: #8a78ff;
+            font-size: 30px;
+        }
+        .nav-3 .text-face {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            transform: rotateY(180deg); /* Pre-flip the text */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <h2>1. Curved Cutout (Bouncy)</h2>
+        <ul class="nav nav-1">
+            <div class="nav-1-indicator"></div>
+            <li class="nav-item active">
+                <a href="#" class="nav-link"><i class='bx bxs-home-smile'></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class='bx bxs-book-content'></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class='bx bxs-bell'></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class='bx bxs-user'></i></a>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h2>2. Sliding Pill (Smooth)</h2>
+        <ul class="nav nav-2">
+            <div class="nav-2-indicator"></div>
+            <li class="nav-item active">
+                <a href="#" class="nav-link"><i class='bx bx-home-alt-2'></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class='bx bx-search-alt-2'></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class='bx bx-plus-circle'></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class='bx bx-heart'></i></a>
+            </li>
+             <li class="nav-item">
+                <a href="#" class="nav-link"><i class='bx bx-user-circle'></i></a>
+            </li>
+        </ul>
+    </div>
+    
+    <div>
+        <h2>3. 3D Flip (Dynamic)</h2>
+        <ul class="nav nav-3">
+            <li class="nav-item active">
+                <a href="#" class="nav-link">
+                    <span class="nav-face icon-face"><i class='bx bxs-plane-alt'></i></span>
+                    <span class="nav-face text-face">Flights</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="nav-face icon-face"><i class='bx bxs-hotel'></i></span>
+                    <span class="nav-face text-face">Hotels</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="nav-face icon-face"><i class='bx bxs-car'></i></span>
+                    <span class="nav-face text-face">Cars</span>
+                </a>
+            </li>
+             <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="nav-face icon-face"><i class='bx bxs-compass'></i></span>
+                    <span class="nav-face text-face">Explore</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // --- Logic for Nav Bar 1: Curved Cutout ---
+        function initializeNav1() {
+            const nav = document.querySelector('.nav-1');
+            const navItems = nav.querySelectorAll('.nav-item');
+            const indicator = nav.querySelector('.nav-1-indicator');
+
+            function moveIndicator(element) {
+                const itemRect = element.getBoundingClientRect();
+                const navRect = nav.getBoundingClientRect();
+                const newPos = (itemRect.left - navRect.left) + (itemRect.width / 2) - (indicator.offsetWidth / 2);
+                indicator.style.left = `${newPos}px`;
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (item.classList.contains('active')) return;
+                    nav.querySelector('.nav-item.active').classList.remove('active');
+                    item.classList.add('active');
+                    moveIndicator(item);
+                });
+            });
+
+            const initialActive = nav.querySelector('.nav-item.active');
+            if (initialActive) setTimeout(() => moveIndicator(initialActive), 50);
+        }
+
+        // --- Logic for Nav Bar 2: Sliding Pill ---
+        function initializeNav2() {
+            const nav = document.querySelector('.nav-2');
+            const navItems = nav.querySelectorAll('.nav-item');
+            const indicator = nav.querySelector('.nav-2-indicator');
+
+            function moveIndicator(element) {
+                const itemRect = element.getBoundingClientRect();
+                const navRect = nav.getBoundingClientRect();
+                indicator.style.left = `${itemRect.left - navRect.left}px`;
+                indicator.style.width = `${itemRect.width}px`;
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (item.classList.contains('active')) return;
+                    nav.querySelector('.nav-item.active').classList.remove('active');
+                    item.classList.add('active');
+                    moveIndicator(item);
+                });
+            });
+            
+            const initialActive = nav.querySelector('.nav-item.active');
+            if (initialActive) setTimeout(() => moveIndicator(initialActive), 50);
+        }
+
+        // --- Logic for Nav Bar 3: 3D Flip ---
+        function initializeNav3() {
+            const nav = document.querySelector('.nav-3');
+            const navItems = nav.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (item.classList.contains('active')) return;
+                    nav.querySelector('.nav-item.active').classList.remove('active');
+                    item.classList.add('active');
+                });
+            });
+        }
+        
+        // Initialize all navigation bars on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeNav1();
+            initializeNav2();
+            initializeNav3();
+        });
+    </script>
+</body>
+</html>
